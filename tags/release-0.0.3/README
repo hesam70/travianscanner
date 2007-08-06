@@ -1,0 +1,11 @@
+放在C:\scan\ 用命令
+C:\scan\scan.exe -l -u 用户名 -p 密码 开始x坐标:开始y坐标 结束x坐标:结束y坐标
+
+如：C:\scan\scan.exe -l -u travian0 -p travian0 300:300 400:400
+
+结果保存在C:\scan\result\目录，三个文件一个是村庄，一个是资源的绿洲，一个是有动物的绿洲，是UTF-8编码的，Excel可能打开是乱码，可以用记事本打开。
+
+更多帮助请 scan.exe --help
+
+不会偷你的密码，不放心的话找seven@sevenever.com 要源代码(python).
+写的简陋，能用就行，高手勿笑。
