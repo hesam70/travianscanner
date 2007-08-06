@@ -91,7 +91,7 @@ class Config(object):
 			return False
 				
 	def printVersion(self):
-		print 'Travian scaner 0.3 (2007/06/25)'
+		print 'Travian scaner 0.0.5 (2007/07/10)'
 		print 'Written by sevenever.'
 		print 'Copyright (C) 2007 Sevenever.'
 		print 'This is free software; see the source for copying conditions.  There is NO'
