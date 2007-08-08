@@ -1,5 +1,23 @@
 #!/usr/bin/python
-# -*- coding: gb2312 -*-
+# -*- Mode: python; coding: utf-8; tab-width: 8; indent-tabs-mode: t; -*- 
+#
+# Copyright 2007 Sevenever
+# Copyright (C) 2007 Sevenever
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA.
+
 import codecs
 import os.path
 import urllib
@@ -64,10 +82,10 @@ class TravianClient(object):
 			self.fslog.write('\n')
 			strForm = strForm[strForm.find(u'<input type="hidden" name="login" value="')+len(u'<input type="hidden" name="login" value="'):]
 			loginvalue = strForm[:10]
-			strForm = strForm[strForm.find(u'ÓÃ»§Ãû:'):]
+			strForm = strForm[strForm.find(u'ç”¨æˆ·å:'):]
 			strForm = strForm[strForm.find(u'name="')+len(u'name="'):]
 			userfield = strForm[:7]
-			strForm = strForm[strForm.find(u'ÃÜÂë:'):]
+			strForm = strForm[strForm.find(u'å¯†ç :'):]
 			strForm = strForm[strForm.find(u'name="')+len(u'name="'):]
 			passfield = strForm[:7]
 			strForm = strForm[strForm.find(u'name="')+len(u'name="'):]
@@ -107,7 +125,7 @@ class TravianClient(object):
 			strHtml = handle.read().decode('UTF-8')
 			self.fslog.write(strHtml)
 			self.fslog.write('\n')
-			if strHtml.find('login') > 0 and strHtml.find(u'ÓÃ»§Ãû:') > 0 and strHtml.find(u'ÃÜÂë:') > 0 :
+			if strHtml.find('login') > 0 and strHtml.find(u'ç”¨æˆ·å:') > 0 and strHtml.find(u'å¯†ç :') > 0 :
 				return False
 			#print 'These are the cookies we have received so far :'
 			#for index, cookie in enumerate(self.cj):

@@ -1,5 +1,23 @@
 #! /usr/bin/python
-# -*- coding: gb2312 -*-
+# -*- Mode: python; coding: utf-8; tab-width: 8; indent-tabs-mode: t; -*- 
+#
+# Copyright 2007 Sevenever
+# Copyright (C) 2007 Sevenever
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA.
+
 import codecs
 import os
 import os.path
@@ -128,7 +146,7 @@ class KarteDThread(threading.Thread):
 		strHtml = strHtml[index:]
 		index = strHtml.find('</div>')
 		strHtml = strHtml[:index]
-		if strInfo.find(u'×ÊÔ´·ÖÅä') >= 0:
+		if strInfo.find(u'èµ„æºåˆ†é…') >= 0:
 			#farm
 			Info = ['','','','',str(tempx),str(tempy)]
 			index = strHtml.find('<td class="s7 b">')
@@ -140,18 +158,18 @@ class KarteDThread(threading.Thread):
 				index = strHtml.find('<td>') + len('<td>')
 				index2 = strHtml.find('</td>')
 				strInfo2 = strHtml[index:index2]
-				if strInfo2.find(u'·¥Ä¾³¡') >= 0:
+				if strInfo2.find(u'ä¼æœ¨åœº') >= 0:
 					Info[0] = strInfo
-				elif strInfo2.find(u'Äà¿Ó') >= 0:
+				elif strInfo2.find(u'æ³¥å‘') >= 0:
 					Info[1] = strInfo
-				elif strInfo2.find(u'Ìú¿ó³¡') >= 0:
+				elif strInfo2.find(u'é“çŸ¿åœº') >= 0:
 					Info[2] = strInfo
-				elif strInfo2.find(u'Å©³¡') >= 0:
+				elif strInfo2.find(u'å†œåœº') >= 0:
 					Info[3] = strInfo
 				index = strHtml.find('<td class="s7 b">')
 				strHtml = strHtml[index + len('<td class="s7 b">'):]
 			self.scaner.FarmWriter.write(",".join(Info) + '\n')
-		elif strInfo.find(u'¾ü¶Ó') >= 0:
+		elif strInfo.find(u'å†›é˜Ÿ') >= 0:
 			#oasis
 			Info = ['','','','','','','','','','',str(tempx),str(tempy)]
 			index = strHtml.find('<td align="right">&nbsp;<b>')
@@ -163,25 +181,25 @@ class KarteDThread(threading.Thread):
 				index = strHtml.find('<td>') + len('<td>')
 				index2 = strHtml.find('</td>')
 				strInfo2 = strHtml[index:index2]
-				if strInfo2.find(u'ÀÏÊó') >= 0:
+				if strInfo2.find(u'è€é¼ ') >= 0:
 					Info[0] = strInfo
-				elif strInfo2.find(u'Ö©Öë') >= 0:
+				elif strInfo2.find(u'èœ˜è››') >= 0:
 					Info[1] = strInfo
-				elif strInfo2.find(u'Ò°Öí') >= 0:
+				elif strInfo2.find(u'é‡çŒª') >= 0:
 					Info[2] = strInfo
-				elif strInfo2.find(u'Éß') >= 0:
+				elif strInfo2.find(u'è›‡') >= 0:
 					Info[3] = strInfo
-				elif strInfo2.find(u'òùòğ') >= 0:
+				elif strInfo2.find(u'è™è ') >= 0:
 					Info[4] = strInfo
-				elif strInfo2.find(u'ÀÇ') >= 0:
+				elif strInfo2.find(u'ç‹¼') >= 0:
 					Info[5] = strInfo
-				elif strInfo2.find(u'ĞÜ') >= 0:
+				elif strInfo2.find(u'ç†Š') >= 0:
 					Info[6] = strInfo
-				elif strInfo2.find(u'öùÓã') >= 0:
+				elif strInfo2.find(u'é³„é±¼') >= 0:
 					Info[7] = strInfo
-				elif strInfo2.find(u'ÀÏ»¢') >= 0:
+				elif strInfo2.find(u'è€è™') >= 0:
 					Info[8] = strInfo
-				elif strInfo2.find(u'´óÏó') >= 0:
+				elif strInfo2.find(u'å¤§è±¡') >= 0:
 					Info[9] = strInfo
 				index = strHtml.find('<td align="right">&nbsp;<b>')
 				strHtml = strHtml[index + len('<td align="right">&nbsp;<b>'):]
@@ -274,16 +292,16 @@ def main():
 	else:
 		#cookie check
 		strHtml = tclient.getKarteZHtml(320801)
-		if strHtml.find('login') > 0 and strHtml.find(u'ÓÃ»§Ãû:') > 0 and strHtml.find(u'ÃÜÂë:') > 0 :
+		if strHtml.find('login') > 0 and strHtml.find(u'ç”¨æˆ·å:') > 0 and strHtml.find(u'å¯†ç :') > 0 :
 			print 'Cookie time out, relogin needed. Please use -l option or try --help option.'
 			sys.exit()
 	
 	fsVillage = ScanWriter('result' + os.path.sep + dt.strftime('%Y%m%d %H%M%S') + 'Village.csv',config.Output[0])
 	fsFarm = ScanWriter('result' + os.path.sep + dt.strftime('%Y%m%d %H%M%S') + 'Farm.csv',config.Output[1])
 	fsOasis = ScanWriter('result' + os.path.sep + dt.strftime('%Y%m%d %H%M%S') + 'Oasis.csv',config.Output[2])
-	fsVillage.write(u'´å×¯,Íæ¼Ò,¾ÓÃñ,ÁªÃË,x,y\n')
-	fsFarm.write(u'·¥Ä¾³¡,Äà¿Ó,Ìú¿ó³¡,Å©³¡,x,y\n')
-	fsOasis.write(u'ÀÏÊó,Ö©Öë,Ò°Öí,Éß,òùòğ,ÀÇ,ĞÜ,öùÓã,ÀÏ»¢,´óÏó,x,y\n')
+	fsVillage.write(u'æ‘åº„,ç©å®¶,å±…æ°‘,è”ç›Ÿ,x,y\n')
+	fsFarm.write(u'ä¼æœ¨åœº,æ³¥å‘,é“çŸ¿åœº,å†œåœº,x,y\n')
+	fsOasis.write(u'è€é¼ ,èœ˜è››,é‡çŒª,è›‡,è™è ,ç‹¼,ç†Š,é³„é±¼,è€è™,å¤§è±¡,x,y\n')
 	
 	scaner = Scaner(config, tclient, [fsVillage,fsFarm,fsOasis])
 	scaner.scan()
