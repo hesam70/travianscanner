@@ -79,9 +79,9 @@ class Config(object):
 						self.Output[2] = True
 					if not(self.Output[0] or self.Output[1] or self.Output[2]) :
 						raise OptionException('output should have one on at least')
-				if o in ("--savelog"):
+				if o in ('--savelog',):
 					self.log = True
-				if o in ("--version"):
+				if o in ('--version',):
 					self.printVersion()
 					return False
 				
