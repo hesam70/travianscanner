@@ -26,6 +26,7 @@ import sys
 import threading
 import random
 import time
+import re
 from datetime import datetime
 from Queue import Queue
 from Queue import Empty
@@ -137,6 +138,7 @@ class KarteDThread(threading.Thread):
 	def parseKarteDHtml(self, gridID, strHtml):
 		tempx, tempy = [int(gridID)%(self.scaner.config.ServerScale * 2 + 1) - (self.scaner.config.ServerScale + 1), self.scaner.config.ServerScale - int(gridID)/(self.scaner.config.ServerScale * 2 + 1)]
 			
+		strHtmlOld = strHtml
 		index = strHtml.find('<div id="pr" class="map_details_right">')
 		strHtml = strHtml[index:]
 		index = strHtml.find('<div class="f10 b">') + len('<div class="f10 b">')
@@ -171,7 +173,13 @@ class KarteDThread(threading.Thread):
 			self.scaner.FarmWriter.write(",".join(Info) + '\n')
 		elif strInfo.find(u'军队') >= 0:
 			#oasis
-			Info = ['','','','','','','','','','',str(tempx),str(tempy)]
+			pattern = r'''<img src="img/un/m/w(?P<id>\d+).jpg" id="resfeld">'''
+			reresult = re.search(pattern, strHtmlOld)
+			if reresult != None :
+				strOasisType = reresult.group('id')
+			else:
+				strOasisType = ''
+			Info = ['','','','','','','','','','',strOasisType,str(tempx),str(tempy)]
 			index = strHtml.find('<td align="right">&nbsp;<b>')
 			strHtml = strHtml[index + len('<td align="right">&nbsp;<b>'):]
 			while index >=0 :
@@ -301,7 +309,7 @@ def main():
 	fsOasis = ScanWriter('result' + os.path.sep + dt.strftime('%Y%m%d %H%M%S') + 'Oasis.csv',config.Output[2])
 	fsVillage.write(u'村庄,玩家,居民,联盟,x,y\n')
 	fsFarm.write(u'伐木场,泥坑,铁矿场,农场,x,y\n')
-	fsOasis.write(u'老鼠,蜘蛛,野猪,蛇,蝙蝠,狼,熊,鳄鱼,老虎,大象,x,y\n')
+	fsOasis.write(u'老鼠,蜘蛛,野猪,蛇,蝙蝠,狼,熊,鳄鱼,老虎,大象,绿洲类型,x,y\n')
 	
 	scaner = Scaner(config, tclient, [fsVillage,fsFarm,fsOasis])
 	scaner.scan()
